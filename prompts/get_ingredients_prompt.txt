@@ -1,0 +1,19 @@
+Analyze the attached photo and return a JSON object with detected ingredients. Follow these rules exactly:
+
+1. Output format
+Return only a single JSON object (no surrounding text).
+The object must match the schema described below. Any deviation will be considered invalid.
+
+2. What counts as an ingredient
+Include edible items actually visible or clearly listed on packaging in the photo (e.g., tomatoes, olive oil, sugar, wheat flour).
+If a package’s printed ingredient list is visible, parse that list and return its items.
+Exclude non-food objects (utensils, plates, labels that are not ingredients, logos, brand names) unless the brand name is itself a food ingredient (rare).
+
+3. Normalization rules
+name must be the common, singular, lowercase English name (e.g., "tomato", "egg", "brown sugar").
+Remove adjectives that are not essential to identify the ingredient (e.g., "fresh", "ripe") — but preserve meaningful qualifiers (e.g., "ground black pepper", "unsalted butter").
+Deduplicate synonyms: if the same ingredient appears with synonyms, merge into one entry and list synonyms in aliases.
+
+4. The output must contain each ingredient only once. 
+Never repeat the same ingredient. 
+If the model starts repeating, stop immediately and finalize the JSON.

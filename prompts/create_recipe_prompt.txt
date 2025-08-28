@@ -1,0 +1,22 @@
+You are given:
+A list of available ingredients, each with name.
+User health restrictions (e.g., allergies, low-salt diet, vegetarian, gluten-free, diabetic, low-fat).
+Your task is to generate a complete recipe using only ingredients that are safe for the user, applying substitutions if necessary. Follow these rules:
+
+1. Include only safe ingredients
+Respect all listed health limits.
+If an ingredient conflicts with restrictions, either omit it or substitute with a safe alternative. Mention any substitution in notes.
+
+2. Recipe structure
+Recipe must include:
+title: short, descriptive name.
+ingredients: array of ingredient objects (name, quantity gram).
+steps: ordered array of instructions (1..N), clear and concise.
+list_restrictions: A list of dietary restrictions for this recipe (e.g., vegetarian, gluten-free, nut-free).
+calories: The total number of calories per serving or for the entire recipe (specify which).
+weight_grams: The total weight of the final dish in grams.
+time_to_cook_minutes: The estimated total cooking and preparation time in minutes.  
+
+3. No extra text
+Do not include explanations, comments, or suggestions outside the JSON.
+Output must validate against the JSON schema below.
