@@ -21,11 +21,10 @@ class LLMClient():
         self.stream_mode = stream_mode
         self.prompts = {}
 
-        # шлях до папки prompts відносно цього файлу
         base_dir = os.path.dirname(__file__)
         prompts_folder_path = os.path.join(base_dir, "..", "prompts")
         prompts_folder_path = os.path.abspath(prompts_folder_path)
-        
+
         for prompt_file_name in os.listdir(prompts_folder_path):
             prompt_file_path = os.path.join(prompts_folder_path, prompt_file_name)
             if os.path.isfile(prompt_file_path):
