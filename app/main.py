@@ -1,5 +1,6 @@
-from fastapi import FastAPI
-from services import llm_service
+from typing import List
+from fastapi import FastAPI, Query
+from app.services import llm_service
 
 
 app = FastAPI()
@@ -18,8 +19,8 @@ async def get_ingredients(image_bytes: str) -> dict:
 
 @app.get("/create_resipe")
 async def create_resipe(
-    list_ingredients: list,
-    list_restrictions: list
+    list_ingredients: List[str] = Query(...),
+    list_restrictions: List[str] = Query([])
 ) -> dict:
     return client.create_resipe(
         list_ingredients=list_ingredients,

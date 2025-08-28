@@ -1,10 +1,16 @@
 import json
+import os
 
-from utils import resize_image_bytes
-from services import llm_service
+from app.utils import resize_image_bytes
+from app.services import llm_service
 
 
-with open("images/ggg.jpeg", "rb") as f:
+base_dir = os.path.dirname(__file__)
+image_folder_path = os.path.join(base_dir, "images")
+image_folder_path = os.path.abspath(image_folder_path)
+        
+
+with open(f"{image_folder_path}/ggg.jpeg", "rb") as f:
     image_bytes = f.read()
 
 

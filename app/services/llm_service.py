@@ -3,9 +3,9 @@ import json
 
 from ollama import chat
 
-from logging_config import logger
-from schemas.create_recipe import Recipe
-from schemas.get_ingredients import ResponseSchema as GetIngredientSchema
+from app.logging_config import logger
+from app.schemas.create_recipe import Recipe
+from app.schemas.get_ingredients import ResponseSchema as GetIngredientSchema
 
 
 
@@ -21,8 +21,13 @@ class LLMClient():
         self.stream_mode = stream_mode
         self.prompts = {}
 
-        for prompt_file_name in os.listdir("prompts"):
-            prompt_file_path = os.path.join("prompts", prompt_file_name)
+        # шлях до папки prompts відносно цього файлу
+        base_dir = os.path.dirname(__file__)
+        prompts_folder_path = os.path.join(base_dir, "..", "prompts")
+        prompts_folder_path = os.path.abspath(prompts_folder_path)
+        
+        for prompt_file_name in os.listdir(prompts_folder_path):
+            prompt_file_path = os.path.join(prompts_folder_path, prompt_file_name)
             if os.path.isfile(prompt_file_path):
                 key = prompt_file_name.split(".")[0]
                 with open(prompt_file_path, "r") as f:
