@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, File, UploadFile
 from app.services import llm_service
 
 
@@ -12,8 +12,9 @@ async def ping():
     return {"message": "pong"}
 
 
-@app.get("/get_ingredients")
-async def get_ingredients(image_bytes: str) -> dict:
+@app.post("/get_ingredients")
+async def get_ingredients(file: UploadFile = File(...)) -> dict:
+    image_bytes = await file.read()
     return client.get_ingredients(image_bytes)
 
 

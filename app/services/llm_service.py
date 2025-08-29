@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from app.logging_config import logger
 from app.schemas.create_recipe import Recipe
 from app.schemas.get_ingredients import ResponseSchema as GetIngredientSchema
-
+from app.utils import resize_image_bytes
 
 
 class LLMClient():
@@ -43,6 +43,8 @@ class LLMClient():
 
     def get_ingredients(self, image_bytes: str) -> dict:
         schema = GetIngredientSchema.model_json_schema()
+        image_bytes = resize_image_bytes(image_bytes)
+
 
         response = self.ollama_client.chat(
             model=self.image_analize_model,
