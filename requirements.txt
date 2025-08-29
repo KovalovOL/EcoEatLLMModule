@@ -1,0 +1,8 @@
+fastapi
+pydantic
+uvicorn
+ollama
+python-multipart
+Pillow
+structlog
+python-dotenv

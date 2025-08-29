@@ -1,3 +1,4 @@
+import requests
 import json
 import os
 
@@ -14,12 +15,18 @@ with open(f"{image_folder_path}/ggg.jpeg", "rb") as f:
     image_bytes = f.read()
 
 
-clien = llm_service.LLMClient()
-ingr = clien.get_ingredients(resize_image_bytes(image_bytes))
-print(json.dumps(ingr, indent=4), end="\n\n\n")
+url = "http://localhost:8000/get_ingredients"
+files = {"file": open("images/ggg.jpeg", "rb")}
 
-recipe = clien.create_resipe(list_ingredients=ingr["ingredient_list"])
-print(json.dumps(recipe, indent=4))
+response = requests.post(url, files=files)
+print(response.json())
+
+# clien = llm_service.LLMClient()
+# ingr = clien.get_ingredients(resize_image_bytes(image_bytes))
+# print(json.dumps(ingr, indent=4), end="\n\n\n")
+
+# recipe = clien.create_recipe(list_ingredients=ingr["ingredient_list"])
+# print(json.dumps(recipe, indent=4))
 
 
 

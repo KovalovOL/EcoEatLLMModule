@@ -1,7 +1,9 @@
 import os
 import json
+from typing import List, Optional
 
-from ollama import chat
+from ollama import Client
+from dotenv import load_dotenv
 
 from app.logging_config import logger
 from app.schemas.create_recipe import Recipe
@@ -21,6 +23,10 @@ class LLMClient():
         self.stream_mode = stream_mode
         self.prompts = {}
 
+        load_dotenv()
+        self.ollama_client = Client(host=os.getenv("OLLAMA_HOST"))
+
+
         base_dir = os.path.dirname(__file__)
         prompts_folder_path = os.path.join(base_dir, "..", "prompts")
         prompts_folder_path = os.path.abspath(prompts_folder_path)
@@ -38,7 +44,7 @@ class LLMClient():
     def get_ingredients(self, image_bytes: str) -> dict:
         schema = GetIngredientSchema.model_json_schema()
 
-        response = chat(
+        response = self.ollama_client.chat(
             model=self.image_analize_model,
             messages=[
                 {"role": "system", "content": self.prompts["get_ingredients_system"]},
@@ -61,10 +67,16 @@ class LLMClient():
         return json.loads(response_content)
 
 
-    def create_resipe(self, list_ingredients: list, list_restrictions: list = []) -> str:
-        schema = Recipe.model_json_schema()
+    def create_recipe(
+            self,
+            list_ingredients: List[str],
+            list_restrictions: Optional[List[str]] = None
+    ) -> str:
+        if list_restrictions is None:
+            list_restrictions = []
 
-        response = chat(
+        schema = Recipe.model_json_schema()
+        response = self.ollama_client.chat(
             model=self.image_analize_model,
             messages=[
                 {"role": "system", "content": self.prompts["create_recipe_system"]},

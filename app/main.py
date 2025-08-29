@@ -22,7 +22,7 @@ async def create_resipe(
     list_ingredients: List[str] = Query(...),
     list_restrictions: List[str] = Query([])
 ) -> dict:
-    return client.create_resipe(
+    return client.create_recipe(
         list_ingredients=list_ingredients,
         list_restrictions=list_restrictions
     )
