@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from app.logging_config import logger
 from app.schemas.create_recipe import Recipe
 from app.schemas.get_ingredients import ResponseSchema as GetIngredientSchema
-from app.utils import resize_image_bytes
+from app.utils import resize_image_bytes, log_func
 
 
 class LLMClient():
@@ -41,6 +41,7 @@ class LLMClient():
         logger.info("llm_client_created")
 
 
+    @log_func
     def get_ingredients(self, image_bytes: str) -> dict:
         schema = GetIngredientSchema.model_json_schema()
         image_bytes = resize_image_bytes(image_bytes)
@@ -65,10 +66,9 @@ class LLMClient():
                     print(chunk["message"]["content"], end="", flush=True)
                     response_content += chunk["message"]["content"]
 
-        logger.info("responce_getted")
         return json.loads(response_content)
 
-
+    @log_func
     def create_recipe(
             self,
             list_ingredients: List[str],
@@ -100,5 +100,4 @@ class LLMClient():
                     print(chunk["message"]["content"], end="", flush=True)
                     response_content += chunk["message"]["content"]
 
-        logger.info("responce_getted")
         return json.loads(response_content)   
