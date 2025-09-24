@@ -1,10 +1,12 @@
 from typing import List
 from fastapi import FastAPI, Query, File, UploadFile
-from app.services import llm_service
+
+from app.factories.llm_factory import LLMFactory
 
 
 app = FastAPI()
-client = llm_service.LLMClient()
+llmFactory = LLMFactory()
+client = LLMFactory.create_client(client_name="groq")
 
 
 @app.get("/")

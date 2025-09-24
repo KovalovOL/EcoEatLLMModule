@@ -11,22 +11,33 @@ from app.schemas.get_ingredients import ResponseSchema as GetIngredientSchema
 from app.utils import resize_image_bytes, log_func
 
 
-class LLMClient():
+class LocalOllamaClient():
     def __init__(
-            self, 
-            image_analize_model="qwen2.5vl:7b",
-            text_generate_model="qwen2.5vl:7b",
-            stream_mode = False
+        self, 
+        image_analize_model,
+        text_generate_model,
+        stream_mode
     ):
-        self.image_analize_model = image_analize_model
-        self.text_generate_model = text_generate_model
-        self.stream_mode = stream_mode
+        if image_analize_model is None:
+            self.image_analize_model = "qwen2.5vl:7b"
+        else:
+            self.image_analize_model = image_analize_model
+        
+        if text_generate_model is None:
+            self.text_generate_model = "qwen2.5vl:7b"
+        else:
+            self.text_generate_model = text_generate_model
+
+        if stream_mode is None:
+            self.stream_mode = False
+        else: self.stream_mode = stream_mode
+        
         self.prompts = {}
 
         load_dotenv()
         self.ollama_client = Client(host=os.getenv("OLLAMA_HOST"))
 
-
+        #Load all prompts
         base_dir = os.path.dirname(__file__)
         prompts_folder_path = os.path.join(base_dir, "..", "prompts")
         prompts_folder_path = os.path.abspath(prompts_folder_path)
@@ -68,6 +79,7 @@ class LLMClient():
 
         return json.loads(response_content)
 
+
     @log_func
     def create_recipe(
             self,
@@ -93,11 +105,5 @@ class LLMClient():
 
         if not self.stream_mode:
             response_content = response.message.content
-        else:
-            response_content = ""
-            for chunk in response:
-                if "message" in chunk and "content" in chunk["message"]:
-                    print(chunk["message"]["content"], end="", flush=True)
-                    response_content += chunk["message"]["content"]
 
         return json.loads(response_content)   

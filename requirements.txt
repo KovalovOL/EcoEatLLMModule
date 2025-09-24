@@ -6,3 +6,5 @@ python-multipart
 Pillow
 structlog
 python-dotenv
+groq
+openai

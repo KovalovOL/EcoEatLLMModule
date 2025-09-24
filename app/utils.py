@@ -1,5 +1,4 @@
 import time 
-import inspect
 from functools import wraps
 
 from PIL import Image
@@ -35,6 +34,6 @@ def log_func(func):
         result = func(*args, **kwargs)
 
         elapsed = time.perf_counter() - start
-        logger.info("Function enede", func_name=func.__qualname__, time_needed=elapsed)
+        logger.info("Function ended", func_name=func.__qualname__, time_needed=elapsed)
         return result
     return wrapper
