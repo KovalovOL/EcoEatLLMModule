@@ -4,7 +4,7 @@ from fastapi import FastAPI, Query, File, UploadFile
 from app.factories.llm_factory import LLMFactory
 
 
-app = FastAPI()
+app = FastAPI(root_path="/llm")
 llmFactory = LLMFactory()
 client = LLMFactory.create_client(client_name="groq")
 
