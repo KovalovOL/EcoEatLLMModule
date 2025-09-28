@@ -6,10 +6,10 @@ from typing import List, Optional
 from groq import Groq
 from dotenv import load_dotenv
 
-from app.logging_config import logger
+from app.utils.logging_config import logger
 from app.schemas.create_recipe import Recipe
 from app.schemas.get_ingredients import ResponseSchema as GetIngredientSchema
-from app.utils import resize_image_bytes, log_func
+from app.utils.utils import resize_image_bytes, log_func
 
 
 class GroqClient():

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llm-service-deployment
+  labels:
+    app: llm-service             # лейбл для групування
+spec:
+  replicas: 1                # скільки подів запустити
+  selector:
+    matchLabels:
+      app: llm-service            # каже, що керує подами з цим лейблом
+  template:
+    metadata:
+      labels:
+        app: llm-service          # цей лейбл отримають поди
+    spec:
+      containers:
+      - name: llm-service 
+        image: my-llm-service:latest   # твій docker image
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000

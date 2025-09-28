@@ -1,10 +1,10 @@
 import time 
 from functools import wraps
-
-from PIL import Image
 from io import BytesIO
 
-from app.logging_config import logger
+from PIL import Image
+
+from app.utils.logging_config import logger
 
 
 def resize_image_bytes(image_bytes: bytes, max_size: tuple = (1024, 1024)) -> bytes:
