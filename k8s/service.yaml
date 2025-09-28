@@ -4,9 +4,9 @@ metadata:
   name: llm-service
 spec:
   selector:
-    app: llm-service              # підключається до подів з цим лейблом
+    app: llm-service         
   ports:
     - protocol: TCP
-      port: 80                # порт сервісу (на нього будемо ходити)
-      targetPort: 8000        # куди пересилати всередині пода
-  type: ClusterIP             # доступно лише всередині кластера
+      port: 80               
+      targetPort: 8000       
+  type: ClusterIP            
